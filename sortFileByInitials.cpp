@@ -24,11 +24,7 @@ int main()
         getline(outputFile, word, '\t');
         getline(outputFile, all);
 
-        for (auto &ch : word)
-        {
-            cout << ch << endl;
-            asciiSum += ch;
-        }
+        asciiSum = word[0];
 
         outputFileWithAsciiSum << index << '\t' << word << '\t' << asciiSum << '\t' << all << endl;
 
