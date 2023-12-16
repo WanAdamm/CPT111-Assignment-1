@@ -15,7 +15,7 @@ int main()
     outputFileWithAsciiSum.open("outputFileWithAsciiSum.txt");
     string word, meaning, inputFileName, outputFileName;
     string index, wordInitial, searchedWord, all;
-    int asciiSum;
+    int asciiFirstWord;
 
     // TODO: add sorting word capabilities (sort by alphabet????)
 
@@ -24,11 +24,11 @@ int main()
         getline(outputFile, word, '\t');
         getline(outputFile, all);
 
-        asciiSum = word[0];
+        asciiFirstWord = word[0];
 
-        outputFileWithAsciiSum << index << '\t' << word << '\t' << asciiSum << '\t' << all << endl;
+        outputFileWithAsciiSum << index << '\t' << word << '\t' << asciiFirstWord << '\t' << all << endl;
 
-        asciiSum = 0;
+        asciiFirstWord = 0;
     }
 
     return 0;
