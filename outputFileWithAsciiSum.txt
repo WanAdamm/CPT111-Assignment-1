@@ -1,0 +1,30 @@
+1	Ask	287	A	To inquire about something; to request information or assistance.	
+2	Call	380	C	To communicate verbally; a brief visit or phone conversation.	
+3	Day	286	D	A period of 24 hours, especially as a unit of time.	
+4	Family	610	F	A group of individuals living together and sharing common relationships and responsibilities.	
+5	Friend	600	F	A person whom one knows, likes, and trusts.	
+6	Go	182	G	To move from one place to another; to travel or proceed.	
+7	Good	393	G	To be desired or approved of; having positive qualities.	
+8	Great	499	G	Of an extent, amount, or intensity considerably above the normal or average.	
+9	Happen	604	H	To take place or occur, especially by chance.	
+10	Help	393	H	Assistance or support provided to someone in need.	
+11	Home	393	H	The place where one lives or resides, typically with one's family.	
+12	Life	384	L	The condition that distinguishes living organisms from inanimate matter.	
+13	Love	406	L	An intense feeling of deep affection or a great interest or pleasure in something.	
+14	Man	284	M	An adult human male.	
+15	New	298	N	Not existing before; recently made, discovered, or created.	
+16	People	613	P	Human beings in general or considered collectively.	
+17	Place	485	P	A particular point or area in space; a location.	
+18	Place	485	P	A specific location or area, often with a particular significance.	
+19	See	285	S	To perceive with the eyes; to understand or comprehend.	
+20	Tell	401	T	To communicate information or facts to someone.	
+21	Thing	506	T	An inanimate object or item.	
+22	Think	510	T	To have a particular opinion, belief, or idea.	
+23	Time	399	T	The indefinite continued progress of existence.	
+24	Try	319	T	To make an effort or attempt to do something.	
+25	Use	301	U	To employ or apply for a purpose; to make use of.	
+26	Want	410	W	To have a desire for or a wish to possess something.	
+27	Way	305	W	A method, style, or manner of doing something.	
+28	Woman	514	W	An adult human female.	
+29	Work	419	W	Activity involving mental or physical effort done to achieve a purpose.	
+30	Year	401	Y	The time taken by the Earth to make one revolution around the sun.	
