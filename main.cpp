@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-/* 
+/*
     output file specs:
     4 columns separated by tab
     index
@@ -63,15 +63,18 @@ int main()
 
     // function for searching through files
     string index, wordInitial, searchedWord, all;
+    bool addNewWord;
 
     cout << "enter word to be searched: ";
     cin >> searchedWord;
 
     // TODO: should we read from input or output file.
-    // reset output file pointer to top left of file
-    outputFile.seekp(0);
+
     if (outputFile)
     {
+        // reset output file pointer to top left of file
+        outputFile.seekp(0);
+
         while (getline(outputFile, index, '\t'))
         {
             getline(outputFile, word, '\t');
@@ -88,11 +91,24 @@ int main()
             {
                 if (outputFile.eof())
                 {
-                    cout << "Sorry, the word is not yet available in the dictionary, would you like to add it?";
-                    // TODO: add word adding capabilities
-                    // reset file pointer
+                    cout << "Sorry, the word is not yet available in the dictionary, would you like to add it?" << endl;
+                    cout << "yes: 1\nno: 0\n";
+                    cin >> addNewWord;
+
+                    if (addNewWord)
+                    {
+                        // TODO: add word adding capabilities
+                    }
+
+                    cout << "enter word to be searched: ";
+                    cin >> searchedWord;
+
+                    // clear fail and eof bits
+                    outputFile.clear();
+                    // reset output file pointer to top left of file
                     outputFile.seekp(0);
-                    break;
+
+                    continue;
                 }
                 else
                 {
