@@ -13,6 +13,9 @@ using namespace std;
     meaning
 */
 
+// TODO: maybe only stop program when user wants to?
+// TODO: bug found, when looping program
+
 int main()
 {
     string word, meaning, inputFileName, outputFileName;
@@ -36,13 +39,13 @@ int main()
     fstream outputFile;
     outputFile.open("outputFile.txt");
 
+    // set line counter to 1
+    int lineCounter = 1;
+
     // check if input file exist or not
     if (inputFile)
     {
         // this particular while loop generate the output file
-
-        // set line counter to 1
-        int lineCounter = 1;
 
         // check if end of file and also pass the word into a string variable.
         while (getline(inputFile, word, '\t'))
@@ -67,8 +70,6 @@ int main()
 
     cout << "enter word to be searched: ";
     cin >> searchedWord;
-
-    // TODO: should we read from input or output file.
 
     if (outputFile)
     {
@@ -96,8 +97,24 @@ int main()
                     cin >> addNewWord;
 
                     if (addNewWord)
-                    {
-                        // TODO: add word adding capabilities
+                    {   
+                        // close file then open it in append mode
+                        outputFile.close();
+                        outputFile.open("outputFile.txt", ios::app);
+
+                        // get the meaning of the new word
+                        cout << "enter meaning of word: ";
+                        // remove undiserable character from the input buffer
+                        cin.ignore();
+                        getline(cin, meaning);
+
+                        // output line number, word, and the initial of the word into the output file.
+                        outputFile << lineCounter << '\t' << searchedWord << '\t' << searchedWord[0] << '\t';
+                        // output meaning of word into the output file then point onto the next line.
+                        outputFile << meaning << endl;
+
+                        // increment line counter by 1.
+                        lineCounter++;
                     }
 
                     cout << "enter word to be searched: ";

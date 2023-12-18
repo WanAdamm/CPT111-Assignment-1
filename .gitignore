@@ -5,3 +5,7 @@ tempCodeRunnerFile.cpp
 word dataset.csv
 word dataset parser.cpp
 output parser.txt
+.gitignore
+outputFile.txt
+outputFileWithAsciiSum.txt
+sortedOutputFile.txt

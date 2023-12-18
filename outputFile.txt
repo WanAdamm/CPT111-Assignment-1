@@ -13191,3 +13191,4 @@ Teutonic	m	relating to the ancient Celtic tribe known as the Teutons
 13189	Zoology	Z	that portion of science that deals with the analysis of animals and their behaviors	
 13190	Zoom	Z	to move very quickly	
 13191	Zygote	Z	the fertilized egg that results from the union of sex cells	
+13192	Owl	O	a nocturnal bird of prey
