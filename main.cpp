@@ -31,6 +31,9 @@ int main()
     cout << "                   Simple Dictionary\n\n";
     cout << "    This program reads from file containing word\n    and its meaning separated by tab then output it\n    to a file after being processed\n";
     cout << "--------------------------------------------------------\n";
+
+    cout << "\n\nto end the program enter -1 when asked for a word\n" << endl;
+
     // cout << "\n\nenter input file name: ";
     // cin >> inputFileName;
 
@@ -79,17 +82,30 @@ int main()
 
         while (!outputFile.eof())
         {
+            // check if user wanted to end the program
+            if(searchedWord == "-1") {
+                break;
+            }
+
             getline(outputFile, index, '\t');
             getline(outputFile, word, '\t');
 
             if (word == searchedWord)
             {
-
                 getline(outputFile, wordInitial, '\t');
-                // since no delimiter is assign the file would be read until a breakline then pointed onto the next line
+
+                // only get meaning if word matched searched word
                 getline(outputFile, meaning);
                 cout << meaning << endl;
-                break;
+
+                // clear fail and eof bits
+                outputFile.clear();
+                // reset output file pointer to top left of file
+                outputFile.seekp(0);
+
+                // ask user to search for a word
+                cout << "enter word to be searched: ";
+                cin >> searchedWord;
             }
             else
             {
@@ -128,6 +144,7 @@ int main()
                         outputFile.open("outputFile.txt");
                     }
 
+                    // ask user to search for a word
                     cout << "enter word to be searched: ";
                     cin >> searchedWord;
 

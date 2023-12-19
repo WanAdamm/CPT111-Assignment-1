@@ -13192,3 +13192,4 @@
 13192	Owl	O	a nocturnal bird of prey
 13193	Falcon	F	a bird of prey	
 13193	Bee	B	insects which produce honey	
+13193	Female	F	denoting the sex that can bear offspring or produce eggs, distinguished biologically by the production of gametes (ova) that can be fertilized by male gametes.	
