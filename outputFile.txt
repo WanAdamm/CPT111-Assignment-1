@@ -9492,9 +9492,8 @@
 9492	Respect	R	a feeling of deep admiration and honor for something or someone that causes one to treat it in a dignified way	
 9493	Respectable	R	something or someone that is highly regarded	
 9494	Respected	R	admired because of positive qualities or achievements	
-9495	Respective	R	"Relating or belonging separately to the individual people previously	
-9496	mentioned"
-Respectively	m	in the order given	
+9495	Respective	R	"Relating or belonging separately to the individual people previously mentioned"	
+9496	Respectively	R	in the order given	
 9497	Respiration	R	the act of breathing in and then exhaling	
 9498	Respite	R	brief interval of rest or relief	
 9499	Resplendent	R	"shiny and colourful, and thus pleasing to the eye"	
@@ -11606,9 +11605,8 @@ Respectively	m	in the order given
 11605	Testimony	T	"a formal statement, typically given in a court of law"	
 11606	Testosterone	T	a hormone that stimulates the growth of male sexual characteristics	
 11607	Testy	T	easily ticked off or irritated	
-11608	Tether	T	"to hold something in place while still allowing	
-11609	movement"
-Teutonic	m	relating to the ancient Celtic tribe known as the Teutons	
+11608	Tether	T	"to hold something in place while still allowing movement"	
+11609	Teutonic	T	relating to the ancient Celtic tribe known as the Teutons	
 11610	Textile	T	a type of cloth or woven fabric	
 11611	Textual	T	relating to text	
 11612	Texture	T	the feel or physical sensation of an object	
@@ -13192,3 +13190,4 @@ Teutonic	m	relating to the ancient Celtic tribe known as the Teutons
 13190	Zoom	Z	to move very quickly	
 13191	Zygote	Z	the fertilized egg that results from the union of sex cells	
 13192	Owl	O	a nocturnal bird of prey
+13193	Falcon	F	a bird of prey	

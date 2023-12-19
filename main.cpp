@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include <string>
+#include <sstream>
 using namespace std;
 
 /*
@@ -15,6 +16,8 @@ using namespace std;
 
 // TODO: maybe only stop program when user wants to?
 // TODO: bug found, when looping program
+// TODO: bug found, program ends after adding new word
+// TODO: add rearranging files capabilities
 
 int main()
 {
@@ -29,7 +32,6 @@ int main()
     cout << "                   Simple Dictionary\n\n";
     cout << "    This program reads from file containing word\n    and its meaning separated by tab then output it\n    to a file after being processed\n";
     cout << "--------------------------------------------------------\n";
-    // TODO: add rearranging files capabilities
     // cout << "\n\nenter input file name: ";
     // cin >> inputFileName;
 
@@ -79,12 +81,13 @@ int main()
         while (getline(outputFile, index, '\t'))
         {
             getline(outputFile, word, '\t');
-
+            getline(outputFile, wordInitial, '\t');
+            // since no delimiter is assign the file would be read until a breakline the pointed onto the next line
+            getline(outputFile, meaning);
+            
             if (word == searchedWord)
             {
-                getline(outputFile, wordInitial, '\t');
-                // since no delimiter is assign the file would be read until a breakline the pointed onto the next line
-                getline(outputFile, meaning);
+                // only print out meaning if word matched the word searched
                 cout << meaning << endl;
                 break;
             }
@@ -97,7 +100,10 @@ int main()
                     cin >> addNewWord;
 
                     if (addNewWord)
-                    {   
+                    {
+                        // increment line counter by 1.
+                        lineCounter++;
+
                         // close file then open it in append mode
                         outputFile.close();
                         outputFile.open("outputFile.txt", ios::app);
@@ -111,10 +117,14 @@ int main()
                         // output line number, word, and the initial of the word into the output file.
                         outputFile << lineCounter << '\t' << searchedWord << '\t' << searchedWord[0] << '\t';
                         // output meaning of word into the output file then point onto the next line.
-                        outputFile << meaning << endl;
+                        outputFile << meaning << '\t' << endl;
 
-                        // increment line counter by 1.
-                        lineCounter++;
+                        // reset addNewWord to false so that it wouldnt trigger this if statement
+                        addNewWord = 0;
+
+                        // reopen the file in normal read write mode
+                        outputFile.close();
+                        outputFile.open("outputFile.txt");
                     }
 
                     cout << "enter word to be searched: ";
