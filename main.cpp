@@ -14,6 +14,7 @@ using namespace std;
 */
 
 // TODO: add rearranging files capabilities
+// TODO: when entering neither 0 or 1 after asked if new word wanted to be added the program loop infinitely
 
 int main()
 {
@@ -29,7 +30,8 @@ int main()
     cout << "    This program reads from file containing word\n    and its meaning separated by tab then output it\n    to a file after being processed\n";
     cout << "--------------------------------------------------------\n";
 
-    cout << "\n\nto end the program enter -1 when asked for a word\n" << endl;
+    cout << "\n\nto end the program enter -1 when asked for a word\n"
+         << endl;
 
     // cout << "\n\nenter input file name: ";
     // cin >> inputFileName;
@@ -67,6 +69,7 @@ int main()
 
     // function for searching through files
     string index, wordInitial, searchedWord, all;
+    string wordLowerCase, searchedWordLowerCase;
     bool addNewWord;
 
     cout << "enter word to be searched: ";
@@ -80,14 +83,26 @@ int main()
         while (!outputFile.eof())
         {
             // check if user wanted to end the program
-            if(searchedWord == "-1") {
+            if (searchedWord == "-1")
+            {
                 break;
             }
 
             getline(outputFile, index, '\t');
             getline(outputFile, word, '\t');
 
-            if (word == searchedWord)
+            // convert both word and searchedWord to lowercase to make it case insensitive
+            for (int i = 0; i < word.length(); i++)
+            {
+                wordLowerCase += tolower(word[i]);
+            }
+
+            for (int i = 0; i < searchedWord.length(); i++)
+            {
+                searchedWordLowerCase += tolower(searchedWord[i]);
+            }
+
+            if (wordLowerCase == searchedWordLowerCase)
             {
                 getline(outputFile, wordInitial, '\t');
 
@@ -103,10 +118,20 @@ int main()
                 // ask user to search for a word
                 cout << "enter word to be searched: ";
                 cin >> searchedWord;
+
+                // reset wordLowerCase and searchedWordLowerCase
+                wordLowerCase = "";
+                searchedWordLowerCase = "";
             }
             else
             {
+                // reset wordLowerCase and searchedWordLowerCase
+                wordLowerCase = "";
+                searchedWordLowerCase = "";
+
+                // get the rest of the line and set pointer to next line if word doenst match
                 getline(outputFile, all);
+
                 if (outputFile.eof())
                 {
                     cout << "Sorry, the word is not yet available in the dictionary, would you like to add it?" << endl;

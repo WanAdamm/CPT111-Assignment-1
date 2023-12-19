@@ -13193,3 +13193,4 @@
 13193	Falcon	F	a bird of prey	
 13193	Bee	B	insects which produce honey	
 13193	Female	F	denoting the sex that can bear offspring or produce eggs, distinguished biologically by the production of gametes (ova) that can be fertilized by male gametes.	
+13193	Cut	C	make an opening, incision, or wound in (something) with a sharp-edged tool or object	
