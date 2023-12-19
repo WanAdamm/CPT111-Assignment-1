@@ -2,7 +2,6 @@
 #include <iomanip>
 #include <fstream>
 #include <string>
-#include <sstream>
 using namespace std;
 
 /*
@@ -14,8 +13,6 @@ using namespace std;
     meaning
 */
 
-// TODO: maybe only stop program when user wants to?
-// TODO: bug found, when looping program
 // TODO: add rearranging files capabilities
 
 int main()
