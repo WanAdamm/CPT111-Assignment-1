@@ -16,7 +16,6 @@ using namespace std;
 
 // TODO: maybe only stop program when user wants to?
 // TODO: bug found, when looping program
-// TODO: bug found, program ends after adding new word
 // TODO: add rearranging files capabilities
 
 int main()
@@ -78,21 +77,23 @@ int main()
         // reset output file pointer to top left of file
         outputFile.seekp(0);
 
-        while (getline(outputFile, index, '\t'))
+        while (!outputFile.eof())
         {
+            getline(outputFile, index, '\t');
             getline(outputFile, word, '\t');
-            getline(outputFile, wordInitial, '\t');
-            // since no delimiter is assign the file would be read until a breakline the pointed onto the next line
-            getline(outputFile, meaning);
-            
+
             if (word == searchedWord)
             {
-                // only print out meaning if word matched the word searched
+
+                getline(outputFile, wordInitial, '\t');
+                // since no delimiter is assign the file would be read until a breakline then pointed onto the next line
+                getline(outputFile, meaning);
                 cout << meaning << endl;
                 break;
             }
             else
             {
+                getline(outputFile, all);
                 if (outputFile.eof())
                 {
                     cout << "Sorry, the word is not yet available in the dictionary, would you like to add it?" << endl;
