@@ -6,55 +6,40 @@ using namespace std;
 
 int main()
 {
-    ifstream outputFile;
-    ofstream sortedOutputFile;
-    fstream outputFileWithAsciiSum;
+    fstream inputFile;
+    fstream sortedDict;
 
-    outputFile.open("outputFile.txt");
-    sortedOutputFile.open("sortedOutputFile.txt");
-    outputFileWithAsciiSum.open("outputFileWithAsciiSum.txt");
-    string word, meaning, inputFileName, outputFileName;
-    string index, wordInitial, searchedWord, all, firstWordAsciiValue;
-    string indexSelected, wordSelected, firstWordAsciiValueSelected, allSelected;
-    string tempWord, tempFirstWordAsciiValueSelected, tempAllSelected;
-    int asciiFirstWord;
+    // Sort and store sorted dictionary on temporary file
+    // Insertion sort used to sort the dictionary
+    string line; // Temporary varible for storing lines of dictionary
 
-    while (getline(outputFile, index, '\t'))
-    {
-        getline(outputFile, word, '\t');
-        getline(outputFile, all);
+    inputFile.open("inputFile copy.txt", ios::in);
+    sortedDict.open("sorted_dict.txt", ios::out | ios::trunc);
+    sortedDict.close(); // Remove all the previous content in file
 
-        asciiFirstWord = word[0];
-
-        outputFileWithAsciiSum << index << '\t' << word << '\t' << asciiFirstWord << '\t' << all << endl;
-
-        asciiFirstWord = 0;
-    }
-
-    // reset file pointer
-    outputFileWithAsciiSum.clear();
-    outputFileWithAsciiSum.seekp(0);
-
-    // TODO: add sorting word capabilities (sort by alphabet????)
-
-    getline(outputFileWithAsciiSum, indexSelected, '\t');
-    getline(outputFileWithAsciiSum, wordSelected, '\t');
-    while (getline(outputFileWithAsciiSum, firstWordAsciiValueSelected, '\t'))
-    {
-        getline(outputFileWithAsciiSum,  allSelected);
-
-        while(getline(outputFileWithAsciiSum, index, '\t'))
+    while (getline(inputFile, line))
+    { // Loop through all lines in inputFile
+        sortedDict.open("sorted_dict.txt", ios::in);
+        string sorted_line, front_dict = "", back_dict = ""; // Temporary varible for storing the parts of dictionary
+        while (getline(sortedDict, sorted_line))
         {
-            getline(outputFileWithAsciiSum, word, '\t');
-            getline(outputFileWithAsciiSum, firstWordAsciiValue, '\t');
-            getline(outputFileWithAsciiSum, all);
-
-            if(firstWordAsciiValueSelected > firstWordAsciiValue)
-            {
-                
+            sorted_line += '\n';
+            if (line < sorted_line)
+            {                             // Word is more closer to A. Word would inserted before this line
+                back_dict += sorted_line; // Append the line to backward
+            }
+            else
+            {                              // Word is more closer to Z. Word would inserted after this line
+                front_dict += sorted_line; // Append the line to forward
             }
         }
+        sortedDict.close();
+        // Replace the file including the new line
+        sortedDict.open("sorted_dict.txt", ios::out | ios::trunc);
+        sortedDict << front_dict << line << endl
+                   << back_dict;
+        sortedDict.close();
     }
-
+    inputFile.close();
     return 0;
 }
