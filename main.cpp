@@ -42,9 +42,6 @@ int main()
     fstream outputFile;
     outputFile.open("outputFile.txt");
 
-    // set line counter to 1
-    int lineCounter = 1;
-
     // check if input file exist or not
     if (inputFile)
     {
@@ -54,12 +51,11 @@ int main()
         while (getline(inputFile, word, '\t'))
         {
             // output line number, word, and the initial of the word into the output file.
-            outputFile << lineCounter << '\t' << word << '\t' << word[0] << '\t';
+            outputFile << word << '\t' << word[0] << '\t';
             getline(inputFile, meaning);
             // output meaning of word into the output file then point onto the next line.
             outputFile << meaning << '\t' << endl;
             // increment line counter by 1.
-            lineCounter++;
         }
     }
     else
@@ -87,8 +83,7 @@ int main()
             {
                 break;
             }
-
-            getline(outputFile, index, '\t');
+            
             getline(outputFile, word, '\t');
 
             // convert both word and searchedWord to lowercase to make it case insensitive
@@ -140,9 +135,6 @@ int main()
 
                     if (addNewWord)
                     {
-                        // increment line counter by 1.
-                        lineCounter++;
-
                         // close file then open it in append mode
                         outputFile.close();
                         outputFile.open("outputFile.txt", ios::app);
@@ -154,7 +146,7 @@ int main()
                         getline(cin, meaning);
 
                         // output line number, word, and the initial of the word into the output file.
-                        outputFile << lineCounter << '\t' << searchedWord << '\t' << searchedWord[0] << '\t';
+                        outputFile << searchedWord << '\t' << searchedWord[0] << '\t';
                         // output meaning of word into the output file then point onto the next line.
                         outputFile << meaning << '\t' << endl;
 
