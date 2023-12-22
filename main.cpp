@@ -7,13 +7,11 @@ using namespace std;
 /*
     output file specs:
     4 columns separated by tab
-    index
     word
     word initial
     meaning
 */
 
-// TODO: add rearranging files capabilities
 // TODO: when entering neither 0 or 1 after asked if new word wanted to be added the program loop infinitely
 
 int main()
@@ -23,18 +21,6 @@ int main()
     cout << "This program is developed by: \n";
     cout << "WAN MUHAMMAD ADAM BIN WAN MOHD FAUZI \n22304170\n";
     cout << "Date: 24th December 2023.\n\n\n";
-
-    //  menu creation section
-    cout << "--------------------------------------------------------\n";
-    cout << "                   Simple Dictionary\n\n";
-    cout << "    This program reads from file containing word\n    and its meaning separated by tab then output it\n    to a file after being processed\n";
-    cout << "--------------------------------------------------------\n";
-
-    cout << "\n\nto end the program enter -1 when asked for a word\n"
-         << endl;
-
-    // cout << "\n\nenter input file name: ";
-    // cin >> inputFileName;
 
     // create an input and output file object
     ifstream inputFile;
@@ -63,122 +49,166 @@ int main()
         cout << "The file did not exist.";
     }
 
-    // function for searching through files
-    string index, wordInitial, searchedWord, all;
-    string wordLowerCase, searchedWordLowerCase;
-    bool addNewWord;
+    bool run = true;
 
-    cout << "enter word to be searched: ";
-    cin >> searchedWord;
-
-    if (outputFile)
+    while (run)
     {
-        // reset output file pointer to top left of file
-        outputFile.seekp(0);
+        //  menu creation section
+        cout << endl
+             << endl;
+        cout << "--------------------------------------------------------\n";
+        cout << "                   Simple Dictionary\n\n";
+        cout << "    This program reads from file containing word\n    and its meaning separated by tab then output it\n    to a file after being processed\n";
+        cout << "--------------------------------------------------------\n";
 
-        while (!outputFile.eof())
+        cout << "1: Display dictionary file" << endl;
+        cout << "2: Search for word's meaning" << endl;
+        cout << "3: Add new word" << endl;
+        cout << "4: Rearrange file" << endl
+             << endl;
+        cout << "to end the program just enter anything other than the above option" << endl
+             << endl;
+
+        int choices;
+        cout << "choose a mode: ";
+        cin >> choices;
+
+        switch (choices)
         {
-            // check if user wanted to end the program
-            if (searchedWord == "-1")
-            {
-                break;
-            }
-            
-            getline(outputFile, word, '\t');
+        case 1:
+        {
+            // clear fail and eof bits
+            outputFile.clear();
+            // reset output file pointer to top left of file
+            outputFile.seekp(0);
 
-            // convert both word and searchedWord to lowercase to make it case insensitive
-            for (int i = 0; i < word.length(); i++)
+            // display the dictionary files
+            while (getline(outputFile, word, '\t'))
             {
-                wordLowerCase += tolower(word[i]);
-            }
-
-            for (int i = 0; i < searchedWord.length(); i++)
-            {
-                searchedWordLowerCase += tolower(searchedWord[i]);
-            }
-
-            if (wordLowerCase == searchedWordLowerCase)
-            {
-                getline(outputFile, wordInitial, '\t');
-
-                // only get meaning if word matched searched word
                 getline(outputFile, meaning);
-                cout << meaning << endl;
 
-                // clear fail and eof bits
-                outputFile.clear();
-                // reset output file pointer to top left of file
-                outputFile.seekp(0);
+                cout << word << '\t' << meaning << endl;
+            }
 
-                // ask user to search for a word
-                cout << "enter word to be searched: ";
-                cin >> searchedWord;
+            break;
+        case 2:
+            // search for word
+            string wordInitial, searchedWord, all;
+            string wordLowerCase, searchedWordLowerCase;
 
-                // reset wordLowerCase and searchedWordLowerCase
-                wordLowerCase = "";
-                searchedWordLowerCase = "";
+            cout << "enter word to be searched: ";
+            cin >> searchedWord;
+
+            // clear fail and eof bits
+            outputFile.clear();
+            // reset output file pointer to top left of file
+            outputFile.seekp(0);
+
+            // check if outputfile is available
+            if (outputFile)
+            {
+
+                while (!outputFile.eof())
+                {
+                    getline(outputFile, word, '\t');
+
+                    // convert both word and searchedWord to lowercase to make it case insensitive
+                    for (int i = 0; i < word.length(); i++)
+                    {
+                        wordLowerCase += tolower(word[i]);
+                    }
+
+                    for (int i = 0; i < searchedWord.length(); i++)
+                    {
+                        searchedWordLowerCase += tolower(searchedWord[i]);
+                    }
+
+                    if (wordLowerCase == searchedWordLowerCase)
+                    {
+                        getline(outputFile, wordInitial, '\t');
+
+                        // only get meaning if word matched searched word
+                        getline(outputFile, meaning);
+                        cout << meaning << endl;
+
+                        // clear fail and eof bits
+                        outputFile.clear();
+                        // reset output file pointer to top left of file
+                        outputFile.seekp(0);
+
+                        // reset wordLowerCase and searchedWordLowerCase
+                        wordLowerCase = "";
+                        searchedWordLowerCase = "";
+
+                        // break from while loop
+                        break;
+                    }
+                    else
+                    {
+                        // reset wordLowerCase and searchedWordLowerCase
+                        wordLowerCase = "";
+                        searchedWordLowerCase = "";
+
+                        // get the rest of the line and set pointer to next line if word doenst match
+                        getline(outputFile, all);
+
+                        // break the loop
+                        continue;
+                    }
+                }
             }
             else
             {
-                // reset wordLowerCase and searchedWordLowerCase
-                wordLowerCase = "";
-                searchedWordLowerCase = "";
-
-                // get the rest of the line and set pointer to next line if word doenst match
-                getline(outputFile, all);
-
-                if (outputFile.eof())
-                {
-                    cout << "Sorry, the word is not yet available in the dictionary, would you like to add it?" << endl;
-                    cout << "yes: 1\nno: 0\n";
-                    cin >> addNewWord;
-
-                    if (addNewWord)
-                    {
-                        // close file then open it in append mode
-                        outputFile.close();
-                        outputFile.open("outputFile.txt", ios::app);
-
-                        // get the meaning of the new word
-                        cout << "enter meaning of word: ";
-                        // remove undiserable character from the input buffer
-                        cin.ignore();
-                        getline(cin, meaning);
-
-                        // output line number, word, and the initial of the word into the output file.
-                        outputFile << searchedWord << '\t' << searchedWord[0] << '\t';
-                        // output meaning of word into the output file then point onto the next line.
-                        outputFile << meaning << '\t' << endl;
-
-                        // reset addNewWord to false so that it wouldnt trigger this if statement
-                        addNewWord = 0;
-
-                        // reopen the file in normal read write mode
-                        outputFile.close();
-                        outputFile.open("outputFile.txt");
-                    }
-
-                    // ask user to search for a word
-                    cout << "enter word to be searched: ";
-                    cin >> searchedWord;
-
-                    // clear fail and eof bits
-                    outputFile.clear();
-                    // reset output file pointer to top left of file
-                    outputFile.seekp(0);
-
-                    continue;
-                }
-                else
-                {
-                    continue;
-                }
+                cout << "output file did not exist" << endl;
             }
+
+            break;
         }
-    }
-    else
-    {
-        cout << "output file did not exist" << endl;
+        case 3:
+        {
+            // add new word
+
+            string newWord, newWordMeaning;
+
+            // clear error state of input stream
+            cin.clear();
+
+            // clear input buffer
+            cin.ignore();
+
+            // close file then open it in append mode
+            outputFile.close();
+            outputFile.open("outputFile.txt", ios::app);
+
+            // get the meaning of the new word
+            cout << "enter word: ";
+            getline(cin, newWord);
+
+            // capitalise first letter of word
+            newWord[0] = toupper(newWord[0]);
+
+            // get the meaning of the new word
+            cout << "enter meaning of word: ";
+            getline(cin, newWordMeaning);
+
+            // output line number, word, and the initial of the word into the output file.
+            outputFile << newWord << '\t' << newWord[0] << '\t';
+            // output meaning of word into the output file then point onto the next line.
+            outputFile << newWordMeaning << '\t' << endl;
+
+            // reopen the file in normal read write mode
+            outputFile.close();
+            outputFile.open("outputFile.txt");
+        }
+        case 4:
+        {
+            // TODO: rearrange word
+            break;
+        }
+        default:
+            run = false;
+            break;
+        }
     }
 
     // close both input and outputfile
