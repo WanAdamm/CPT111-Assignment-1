@@ -4,14 +4,6 @@
 #include <string>
 using namespace std;
 
-/*
-    output file specs:
-    4 columns separated by tab
-    word
-    word initial
-    meaning
-*/
-
 int main()
 {
     string word, wordInitial, meaning, inputFileName, outputFileName;
@@ -290,30 +282,44 @@ int main()
                 {
                     lineToBeRearranged = line;
                 }
-                else if (lineCounter < newLine)
+                else if (newLine < currentLine)
                 {
-                    back_dict += line;
+                    if (lineCounter < newLine)
+                    {
+                        back_dict += line;
+                    }
+                    else if ( lineCounter >= newLine)
+                    {
+                        front_dict += line;
+                    }
                 }
-                else if (lineCounter >= newLine)
+                else if (newLine > currentLine)
                 {
-                    front_dict += line;
+                    if (lineCounter <= newLine)
+                    {
+                        back_dict += line;
+                    }
+                    else if (lineCounter > newLine)
+                    {
+                        front_dict += line;
+                    }
                 }
 
                 // increment line counter by 1
                 lineCounter++;
             }
 
+            cout << back_dict << endl;
+            cout << front_dict << endl;
+
             // destroy all content in output file then rewrite
             outputFile.close();
             outputFile.open("outputFile.txt", ios::out | ios::trunc);
-
             outputFile << back_dict << lineToBeRearranged << front_dict;
-
             outputFile.close();
 
             // reopen in normal read write mode
             outputFile.open("outputFile.txt");
-            outputFile << back_dict << lineToBeRearranged << front_dict;
 
             break;
         }
