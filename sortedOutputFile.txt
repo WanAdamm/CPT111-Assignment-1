@@ -1,7 +1,4 @@
-Ail	A	trouble 	
-Amir	A	fuckboy	
 Apek	A	cina	
-App	A	application	
 Ask	A	To inquire about something; to request information or assistance.	
 Call	C	To communicate verbally; a brief visit or phone conversation.	
 Day	D	A period of 24 hours, especially as a unit of time.	
@@ -18,8 +15,8 @@ Love	L	An intense feeling of deep affection or a great interest or pleasure in s
 Man	M	An adult human male.	
 New	N	Not existing before; recently made, discovered, or created.	
 People	P	Human beings in general or considered collectively.	
-Place	P	A specific location or area, often with a particular significance.	
-Place	P	A specific location or area, often with a particular significance.	
+Place	P	A particular point or area in space; a location.	
+Place	P	A particular point or area in space; a location.	
 See	S	To perceive with the eyes; to understand or comprehend.	
 Tell	T	To communicate information or facts to someone.	
 Thing	T	An inanimate object or item.	

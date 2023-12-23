@@ -87,6 +87,11 @@ int main()
             {
                 getline(outputFile, meaning);
 
+                if(word == "")
+                {
+                    break;
+                }
+
                 cout << word << '\t' << meaning << endl;
             }
 
@@ -211,6 +216,8 @@ int main()
 
                 break;
             }
+
+            break;
         }
         case 4:
         {
@@ -309,9 +316,6 @@ int main()
                 lineCounter++;
             }
 
-            cout << back_dict << endl;
-            cout << front_dict << endl;
-
             // destroy all content in output file then rewrite
             outputFile.close();
             outputFile.open("outputFile.txt", ios::out | ios::trunc);
@@ -395,6 +399,23 @@ int main()
                 outputFile.clear();
                 outputFile.seekp(0);
             }
+
+            ifstream sortedInputFile("sortedOutputFile.txt");
+            string line;
+
+            outputFile.close();
+            outputFile.open("outputFile.txt", ios::out | ios::trunc);
+
+            // copy sortedOutputFile to outputFile
+            while (getline(sortedInputFile, line))
+            {
+                outputFile << line << endl;
+            }
+
+            outputFile.close();
+
+            // reopen in normal R/W mode
+            outputFile.open("outputFile.txt");
 
             break;
         }
