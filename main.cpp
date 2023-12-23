@@ -16,7 +16,7 @@ using namespace std;
 
 int main()
 {
-    string word, meaning, inputFileName, outputFileName;
+    string word, wordInitial, meaning, inputFileName, outputFileName;
 
     cout << "This program is developed by: \n";
     cout << "WAN MUHAMMAD ADAM BIN WAN MOHD FAUZI \n22304170\n";
@@ -45,7 +45,8 @@ int main()
         cout << "2: Display dictionary file" << endl;
         cout << "3: Search for word's meaning" << endl;
         cout << "4: Add new word" << endl;
-        cout << "5: Rearrange file" << endl
+        cout << "5: Rearrange file" << endl;
+        cout << "6: Sort file alphabetically" << endl
              << endl;
         cout << "to end the program just enter anything other than the above option" << endl
              << endl;
@@ -75,11 +76,11 @@ int main()
                     outputFile << meaning << '\t' << endl;
                 }
 
-                cout << "output file generated."  << endl;
+                cout << "output file successfully generated." << endl;
             }
             else
             {
-                cout << "The file did not exist.";
+                cout << "you can only generate output file once";
             }
 
             break;
@@ -171,6 +172,8 @@ int main()
                 cout << "output file did not exist" << endl;
             }
 
+            
+
             break;
         }
         case 4:
@@ -214,20 +217,22 @@ int main()
         case 5:
         {
             // TODO: rearrange word
-            string back_dict = "", line, front_dict = "", lineofWordSelected, wordToBeRearranged, wordToBeRearrangedLowerCase = "", wordLowerCase = "";
-            int lineCounter, lineAfterWordRearranged;
-            bool wordExist = false;
 
-            cout << "enter word to be rearranged: ";
-            cin >> wordToBeRearranged;
+            string back_dict = "", lineToBeRearranged, front_dict = "", line;
+            int currentLine, newLine, lineCounter = 1;
 
-            cout << "enter the new line in which you want to put the word in: ";
-            cin >> lineAfterWordRearranged;
+            // get line to be rearranged
+            cout << "enter line to be rearrange: ";
+            cin >> currentLine;
 
-            // convert both wordToBeRearranged to lowercase to make it case-insensitive
-            for (int i = 0; i < wordToBeRearranged.length(); i++)
+            // get the new line number
+            cout << "enter the new line you want to put it in: ";
+            cin >> newLine;
+
+            // in case new line and current line is same then theres no need to rearrange
+            if (currentLine == newLine)
             {
-                wordToBeRearrangedLowerCase += tolower(wordToBeRearranged[i]);
+                break;
             }
 
             // clear fail and eof bits
@@ -235,88 +240,112 @@ int main()
             // reset output file pointer to top left of file
             outputFile.seekp(0);
 
-            // display the dictionary files
-            while (getline(outputFile, word, '\t'))
-            {
-                getline(outputFile, meaning);
-
-                cout << word << '\t' << meaning << endl;
-            }
-
-            // clear fail and eof bits
-            outputFile.clear();
-            // reset output file pointer to top left of file
-            outputFile.seekp(0);
-
-            while (!outputFile.eof())
-            {
-                getline(outputFile, word, '\t');
-
-                getline(outputFile, meaning);
-
-                // convert word to lower case so that it is case-insensitive
-                for (int i = 0; i < word.length(); i++)
-                {
-                    wordLowerCase += tolower(word[i]);
-                }
-
-                if (wordToBeRearrangedLowerCase == wordLowerCase)
-                {
-                    wordExist = true;
-                    break;
-                }
-                else if (outputFile.eof())
-                {
-                    cout << "sorry, no such word in the dictionary" << endl;
-                    break;
-                }
-
-                // reset wordToBeRearrangedLowerCase and wordLowerCase
-                wordToBeRearrangedLowerCase = "", wordLowerCase = "";
-            }
-
-            // clear fail and eof bits
-            outputFile.clear();
-            // reset output file pointer to top left of file
-            outputFile.seekp(0);
-
-            // set lineCounter to 1;
-            lineCounter = 1;
             while (getline(outputFile, line))
             {
                 line += '\n';
-                if (lineCounter < lineAfterWordRearranged)
+
+                if (lineCounter == currentLine)
+                {
+                    lineToBeRearranged = line;
+                }
+                else if (lineCounter < newLine)
                 {
                     back_dict += line;
                 }
-                else if (lineCounter > lineAfterWordRearranged)
+                else if (lineCounter >= newLine)
                 {
                     front_dict += line;
                 }
-                else if (lineCounter == lineAfterWordRearranged)
-                {
-                    lineofWordSelected = line;
-                }
 
+                // increment line counter by 1
                 lineCounter++;
             }
 
-            // clear fail and eof bits
+            // destroy all content in output file then rewrite
+            outputFile.close();
+            outputFile.open("outputFile.txt", ios::out | ios::trunc);
+
+            outputFile << back_dict << lineToBeRearranged << front_dict;
+
+            outputFile.close();
+
+            // reopen in normal read write mode
+            outputFile.open("outputFile.txt");
+            outputFile << back_dict << lineToBeRearranged << front_dict;
+
+            break;
+        }
+        case 6:
+        {
+            // sort file alphbetically
+
+            fstream File1("sortedWord.txt", ios::out);
+            fstream File2("unsortedWord.txt", ios::out);
+
             outputFile.clear();
-            // reset output file pointer to top left of file
             outputFile.seekp(0);
 
-            if (wordExist)
+            while (getline(outputFile, word, '\t'))
             {
-                outputFile.close();
-                // reopen it and truncate everything inside outFile
-                outputFile.open("outputFile.txt", ios::out | ios::trunc);
-                // rewrite content
-                outputFile << back_dict << lineofWordSelected << front_dict;
-                outputFile.close();
+                File2 << word << endl;
+                getline(outputFile, wordInitial, '\t');
+                getline(outputFile, meaning);
+            }
 
-                // reopen in normal read write mode
-                outputFile.open("outputFile.txt");
+            outputFile.close();
+            outputFile.open("outputFile.txt");
+
+            File1.close();
+            File2.close();
+
+            File1.open("sortedWord.txt");
+            File2.open("unsortedWord.txt");
+
+            string file1Word, file2Word;
+
+            while (getline(File2, file2Word))
+            {
+                string back_dict = "", front_dict = "";
+                while (getline(File1, file1Word))
+                {
+                    file1Word += '\n';
+                    if (file1Word < file2Word)
+                    {
+                        back_dict += file1Word;
+                    }
+                    else if (file1Word > file2Word)
+                    {
+                        front_dict += file1Word;
+                    }
+                }
+
+                file2Word += '\n';
+
+                File1.close();
+                File1.open("sortedWord.txt", ios::out | ios::trunc);
+                File1 << back_dict << file2Word << front_dict;
+                File1.close();
+                File1.open("sortedWord.txt");
+            }
+
+            ofstream sortedOutputFile("sortedOutputFile.txt");
+
+            while (getline(File1, file1Word))
+            {
+                while (getline(outputFile, word, '\t'))
+                {
+                    getline(outputFile, wordInitial, '\t');
+                    getline(outputFile, meaning);
+
+                    if(word == file1Word)
+                    {
+                        sortedOutputFile << word << '\t' << wordInitial << '\t' << meaning << endl;
+                        break;
+                    }
+                }
+
+                outputFile.clear();
+                outputFile.seekp(0);
             }
 
             break;
