@@ -41,6 +41,7 @@ int main()
              << endl;
         cout << "to end the program just enter anything other than the above option" << endl
              << endl;
+        cout << "--------------------------------------------------------\n";
 
         int choices;
         cout << "choose a mode: ";
@@ -109,6 +110,8 @@ int main()
             }
 
             cout << "output file successfully regenerated." << endl;
+
+            break;
         }
         case 3:
         {
