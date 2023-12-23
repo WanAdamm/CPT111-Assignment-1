@@ -12,8 +12,6 @@ using namespace std;
     meaning
 */
 
-// TODO: when entering neither 0 or 1 after asked if new word wanted to be added the program loop infinitely
-
 int main()
 {
     string word, wordInitial, meaning, inputFileName, outputFileName;
@@ -101,7 +99,9 @@ int main()
             }
 
             break;
+        }
         case 3:
+        {
             // search for word
             string wordInitial, searchedWord, all;
             string wordLowerCase, searchedWordLowerCase;
@@ -139,8 +139,7 @@ int main()
 
                         // only get meaning if word matched searched word
                         getline(outputFile, meaning);
-                        cout << endl
-                             << "meaning: " << meaning << endl;
+                        cout << word << ": " << meaning << endl;
 
                         // clear fail and eof bits
                         outputFile.clear();
@@ -172,9 +171,54 @@ int main()
                 cout << "output file did not exist" << endl;
             }
 
-            
+            if (outputFile.eof())
+            {
+                cout << "word not found in the dictionary" << endl;
 
-            break;
+                // clear fail and eof bits
+                outputFile.clear();
+                // reset output file pointer to top left of file
+                outputFile.seekp(0);
+
+                // searched if theres any word similar to the word being searched
+                string searchedWordSubstr = "", wordSubstr = "";
+
+                // formatting so that the searchedWord match the format of word in outputfile
+                for (int i = 0; i < searchedWord.length(); i++)
+                {
+                    searchedWordSubstr += tolower(searchedWord[i]);
+                }
+                searchedWordSubstr[0] = toupper(searchedWordSubstr[0]);
+
+                while (searchedWordSubstr.length() != 0)
+                {
+                    while (getline(outputFile, word, '\t'))
+                    {
+                        getline(outputFile, wordInitial, '\t');
+                        getline(outputFile, meaning);
+
+                        wordSubstr = word.substr(0, searchedWordSubstr.length());
+
+                        if (searchedWordSubstr == wordSubstr)
+                        {
+                            cout << "do you mean: " << word << " ?" << endl;
+                            searchedWordSubstr = "";
+                            break;
+                        }
+
+                        wordSubstr = "";
+                    }
+
+                    searchedWordSubstr = searchedWordSubstr.substr(0, searchedWordSubstr.length() - 1);
+
+                    // clear fail and eof bits
+                    outputFile.clear();
+                    // reset output file pointer to top left of file
+                    outputFile.seekp(0);
+                }
+
+                break;
+            }
         }
         case 4:
         {
@@ -216,8 +260,6 @@ int main()
         }
         case 5:
         {
-            // TODO: rearrange word
-
             string back_dict = "", lineToBeRearranged, front_dict = "", line;
             int currentLine, newLine, lineCounter = 1;
 
@@ -337,7 +379,7 @@ int main()
                     getline(outputFile, wordInitial, '\t');
                     getline(outputFile, meaning);
 
-                    if(word == file1Word)
+                    if (word == file1Word)
                     {
                         sortedOutputFile << word << '\t' << wordInitial << '\t' << meaning << endl;
                         break;
