@@ -31,12 +31,13 @@ int main()
         cout << "                   Simple Dictionary\n";
         cout << "--------------------------------------------------------\n";
 
-        cout << "1: Generate output files (this should only be run the first time you run the program !)" << endl;
-        cout << "2: Display dictionary file" << endl;
-        cout << "3: Search for word's meaning" << endl;
-        cout << "4: Add new word" << endl;
-        cout << "5: Rearrange file" << endl;
-        cout << "6: Sort file alphabetically" << endl
+        cout << "1: Generate dicitionary files" << endl;
+        cout << "2: reset dictionary" << endl;
+        cout << "3: Display dictionary file" << endl;
+        cout << "4: Search for word's meaning" << endl;
+        cout << "5: Add new word" << endl;
+        cout << "6: Rearrange file" << endl;
+        cout << "7: Sort file alphabetically" << endl
              << endl;
         cout << "to end the program just enter anything other than the above option" << endl
              << endl;
@@ -49,10 +50,26 @@ int main()
         {
         case 1:
         {
+            string line;
+            bool isGenerated = false;
+
+            while (getline(outputFile, line))
+            {
+                if (line.length() > 0)
+                {
+                    isGenerated = true;
+                    break;
+                }
+            }
+
+            // clear fail and eof bits
+            outputFile.clear();
+            // reset output file pointer to top left of file
+            outputFile.seekg(0);
+
             // case for generating output file
 
-            // check if input file exist or not
-            if (inputFile)
+            if (!isGenerated)
             {
                 // this particular while loop generate the output file
 
@@ -77,17 +94,35 @@ int main()
         }
         case 2:
         {
+            // reset dictionary
+
+            inputFile.clear();
+            inputFile.seekg(0);
+
+            while (getline(inputFile, word, '\t'))
+            {
+                // output line number, word, and the initial of the word into the output file.
+                outputFile << word << '\t' << word[0] << '\t';
+                getline(inputFile, meaning);
+                // output meaning of word into the output file then point onto the next line.
+                outputFile << meaning << '\t' << endl;
+            }
+
+            cout << "output file successfully regenerated." << endl;
+        }
+        case 3:
+        {
             // clear fail and eof bits
             outputFile.clear();
             // reset output file pointer to top left of file
-            outputFile.seekp(0);
+            outputFile.seekg(0);
 
             // display the dictionary files
             while (getline(outputFile, word, '\t'))
             {
                 getline(outputFile, meaning);
 
-                if(word == "")
+                if (word == "")
                 {
                     break;
                 }
@@ -97,7 +132,7 @@ int main()
 
             break;
         }
-        case 3:
+        case 4:
         {
             // search for word
             string wordInitial, searchedWord, all;
@@ -109,7 +144,7 @@ int main()
             // clear fail and eof bits
             outputFile.clear();
             // reset output file pointer to top left of file
-            outputFile.seekp(0);
+            outputFile.seekg(0);
 
             // check if outputfile is available
             if (outputFile)
@@ -141,7 +176,7 @@ int main()
                         // clear fail and eof bits
                         outputFile.clear();
                         // reset output file pointer to top left of file
-                        outputFile.seekp(0);
+                        outputFile.seekg(0);
 
                         // reset wordLowerCase and searchedWordLowerCase
                         wordLowerCase = "";
@@ -175,7 +210,7 @@ int main()
                 // clear fail and eof bits
                 outputFile.clear();
                 // reset output file pointer to top left of file
-                outputFile.seekp(0);
+                outputFile.seekg(0);
 
                 // searched if theres any word similar to the word being searched
                 string searchedWordSubstr = "", wordSubstr = "";
@@ -211,7 +246,7 @@ int main()
                     // clear fail and eof bits
                     outputFile.clear();
                     // reset output file pointer to top left of file
-                    outputFile.seekp(0);
+                    outputFile.seekg(0);
                 }
 
                 break;
@@ -219,7 +254,7 @@ int main()
 
             break;
         }
-        case 4:
+        case 5:
         {
             // add new word
 
@@ -257,7 +292,7 @@ int main()
 
             break;
         }
-        case 5:
+        case 6:
         {
             string back_dict = "", lineToBeRearranged, front_dict = "", line;
             int currentLine, newLine, lineCounter = 1;
@@ -279,7 +314,7 @@ int main()
             // clear fail and eof bits
             outputFile.clear();
             // reset output file pointer to top left of file
-            outputFile.seekp(0);
+            outputFile.seekg(0);
 
             while (getline(outputFile, line))
             {
@@ -295,7 +330,7 @@ int main()
                     {
                         back_dict += line;
                     }
-                    else if ( lineCounter >= newLine)
+                    else if (lineCounter >= newLine)
                     {
                         front_dict += line;
                     }
@@ -327,7 +362,7 @@ int main()
 
             break;
         }
-        case 6:
+        case 7:
         {
             // sort file alphbetically
 
@@ -335,7 +370,7 @@ int main()
             fstream File2("unsortedWord.txt", ios::out);
 
             outputFile.clear();
-            outputFile.seekp(0);
+            outputFile.seekg(0);
 
             while (getline(outputFile, word, '\t'))
             {
@@ -397,7 +432,7 @@ int main()
                 }
 
                 outputFile.clear();
-                outputFile.seekp(0);
+                outputFile.seekg(0);
             }
 
             ifstream sortedInputFile("sortedOutputFile.txt");
