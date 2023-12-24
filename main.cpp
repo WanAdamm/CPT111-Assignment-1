@@ -25,13 +25,12 @@ int main()
     while (run)
     {
         //  menu creation section
-        cout << endl
-             << endl;
+        cout << endl;
         cout << "--------------------------------------------------------\n";
         cout << "                   Simple Dictionary\n";
         cout << "--------------------------------------------------------\n";
 
-        cout << "1: Generate dicitionary files" << endl;
+        cout << "1: Generate dictionary files" << endl;
         cout << "2: reset dictionary" << endl;
         cout << "3: Display dictionary file" << endl;
         cout << "4: Search for word's meaning" << endl;
@@ -54,6 +53,11 @@ int main()
             string line;
             bool isGenerated = false;
 
+            // clear fail and eof bits
+            outputFile.clear();
+            // reset output file pointer to top left of file
+            outputFile.seekg(0);
+            
             while (getline(outputFile, line))
             {
                 if (line.length() > 0)
@@ -77,18 +81,25 @@ int main()
                 // check if end of file and also pass the word into a string variable.
                 while (getline(inputFile, word, '\t'))
                 {
+                    getline(inputFile, meaning);
+                    
+                    // prevent weird behaviour
+                    if(meaning == "")
+                    {
+                        break;
+                    }
+
                     // output line number, word, and the initial of the word into the output file.
                     outputFile << word << '\t' << word[0] << '\t';
-                    getline(inputFile, meaning);
                     // output meaning of word into the output file then point onto the next line.
                     outputFile << meaning << '\t' << endl;
                 }
 
-                cout << "output file successfully generated." << endl;
+                cout << "dictionary file successfully generated." << endl;
             }
             else
             {
-                cout << "you can only generate output file once";
+                cout << "you can only generate dictionary file once";
             }
 
             break;
@@ -100,6 +111,9 @@ int main()
             inputFile.clear();
             inputFile.seekg(0);
 
+            outputFile.close();
+            outputFile.open("outputFile.txt", ios::out | ios::trunc);
+
             while (getline(inputFile, word, '\t'))
             {
                 // output line number, word, and the initial of the word into the output file.
@@ -109,7 +123,10 @@ int main()
                 outputFile << meaning << '\t' << endl;
             }
 
-            cout << "output file successfully regenerated." << endl;
+            outputFile.close();
+            outputFile.open("outputFile.txt");
+
+            cout << "dictionary file successfully regenerated." << endl;
 
             break;
         }
@@ -204,6 +221,7 @@ int main()
             else
             {
                 cout << "output file did not exist" << endl;
+                break;
             }
 
             if (outputFile.eof())
@@ -223,8 +241,10 @@ int main()
                 {
                     searchedWordSubstr += tolower(searchedWord[i]);
                 }
+                // capitalise first letter so that it matches the dictionary format
                 searchedWordSubstr[0] = toupper(searchedWordSubstr[0]);
 
+                // iterate until substring is of length zero
                 while (searchedWordSubstr.length() != 0)
                 {
                     while (getline(outputFile, word, '\t'))
@@ -234,6 +254,7 @@ int main()
 
                         wordSubstr = word.substr(0, searchedWordSubstr.length());
 
+                        // compare search word substring with current selected word substring
                         if (searchedWordSubstr == wordSubstr)
                         {
                             cout << "do you mean: " << word << " ?" << endl;
@@ -244,6 +265,7 @@ int main()
                         wordSubstr = "";
                     }
 
+                    // reduce searched substring by 1 letter
                     searchedWordSubstr = searchedWordSubstr.substr(0, searchedWordSubstr.length() - 1);
 
                     // clear fail and eof bits
@@ -265,7 +287,6 @@ int main()
 
             // clear error state of input stream
             cin.clear();
-
             // clear input buffer
             cin.ignore();
 
@@ -319,6 +340,7 @@ int main()
             // reset output file pointer to top left of file
             outputFile.seekg(0);
 
+            // iterate to rearrange file
             while (getline(outputFile, line))
             {
                 line += '\n';
@@ -393,6 +415,7 @@ int main()
 
             string file1Word, file2Word;
 
+            // use bubble sort to sort word
             while (getline(File2, file2Word))
             {
                 string back_dict = "", front_dict = "";
@@ -426,7 +449,7 @@ int main()
                 {
                     getline(outputFile, wordInitial, '\t');
                     getline(outputFile, meaning);
-
+                    
                     if (word == file1Word)
                     {
                         sortedOutputFile << word << '\t' << wordInitial << '\t' << meaning << endl;
